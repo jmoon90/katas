@@ -1,4 +1,3 @@
-require 'pry'
 class PigLatinTranslation
   def initialize(phrase)
   @phrase = phrase
