@@ -1,0 +1,36 @@
+#ATM
+
+##Features
+-Open an Account
+  -Option to open a new account
+  -I must identify my account with a unique PIN
+  -I must confirm my PIN
+  -If my PIN and PIN confirmation do not match, I should be prompted to re-enter and reconfirm
+  -After my PIN has been established, I am prompted to specify my initial deposit
+  -My initial deposit is recorded as a transaction on my account
+-Report balance
+  -I must specify my PIN to access my account
+  -I can specify that I'd like to see my balance
+  -The balance that correlates with the PIN is displayed
+  -If I specify an invalid PIN, I am told that the account was not found
+-Make a Withdrawal
+  -I must specify my PIN to access my account
+  -If I specify an invalid PIN, I am told that the account was not found
+  -I can specify that I'd like to make a withdrawal
+  -I must specify a withdrawal amount less than or equal to my current balance
+  -If I exceed my balance, the system should disallow my withdrawal and inform me that I have insufficient funds
+  -If I have specified a valid withdrawal amount, my account should be debited the amount, and the transaction should be recorded
+  -My new balance should be displayed
+-Make a Deposit
+  -I must specify my PIN to access my account
+  -If I specify an invalid PIN, I am told that the account was not found
+  -I can specify that I'd like to make a deposit
+  -I must specify the amount I am depositing
+  -If I specify a valid deposit amount, my account should be credited the amount, and the transaction should be recorded
+  -My new balance should be displayed
+-Transaction History
+  -I must specify my PIN to access my account
+  -If I specify an invalid PIN, I am told that the account was not found
+  -I can specify that I'd like to view my account history
+  -All of my transactions are displayed in sequential order
+  -My effective balance should be displayed
