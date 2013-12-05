@@ -31,11 +31,11 @@ class Atm
       @account = Account.new(@argument)
       @accounts << account if account.unique_pin?
     end
-    account_class(@argument)
+    transaction_class
   end
 
-  def account_class(argument)
-    Account.new(argument).deposit
+  def transaction_class
+    Transaction.new.first_time
   end
 
   def name_input
