@@ -12,11 +12,10 @@ class Account < Atm
     @pin == @pin_confirmation
   end
 
-  def deposit
+  def deposit_message
     puts "How much would you like to deposit?"
     print "> "
     current_deposit = gets.chomp
-    binding.pry
   end
 
   def transaction
