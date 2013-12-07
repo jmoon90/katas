@@ -7,6 +7,6 @@ puts 'Welcome to the Bank. The bank is always open, unless it is closed.'
 puts "------------------------------------------------------------------.\n"
 
 atm = Atm.new
-atm.display_menu
+atm.display_and_yaml
 menu_choice = atm.method_for_option(gets.chomp)
 atm.send(menu_choice)

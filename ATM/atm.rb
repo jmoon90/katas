@@ -2,14 +2,44 @@
 #Views his/her account
 #Main page
 class Atm
-  attr_reader :account, :user, :pin, :pin_confirm
+  attr_reader :account, :accounts
+
   def initialize
     @accounts = []
+    @current_account = 0
+  end
+
+  def display_and_yaml
+    read_in_yaml
+    display_menu
+  end
+
+  def read_in_yaml
+    @pin_name = {}
+    if File.zero?('account.yml')
+      0
+    else
+      people_file = File.open('account.yml', 'r')
+      loaded_people = YAML.load(people_file)
+      @accounts = []
+      loaded_people.each do |people_list|
+          binding.pry
+        people_list.each do |people|
+          binding.pry
+          @name = people[1]
+          @pin = people[0]
+          @pin_name[@pin] = @name
+        end
+      end
+        @accounts << @pin_name
+        @current_account += @accounts.count
+    end
   end
 
   def display_menu
     puts "What would you like to do?"
     puts "1 - Create a new account"
+    puts "2 - Sign in"
   end
 
   def method_for_option(option)
@@ -17,25 +47,37 @@ class Atm
   end
 
   def option_methods_choice
-    { '1' => :sign_up }
+    { '1' => :sign_up,
+      '2' => :sign_in }
   end
 
   def sign_up
-    while @accounts.count == 0
+    while @accounts.count == @current_account
       @argument = {
-                  :name        => name_input,
-                  :pin         => pin_input,
-                  :pin_confirm => pin_confirmation
+                  'name'        => name_input,
+                  'pin'         => pin_input,
+                  'pin_confirm' => pin_confirmation
                   }
-
       @account = Account.new(@argument)
-      @accounts << account if account.unique_pin?
+      if @account.unique_pin?
+        account_info = {}
+        account_info[@account.pin] = @account.name
+        @accounts << account_info
+        @current_account += 2
+      end
     end
-    transaction_class
+    account_first
   end
 
-  def transaction_class
-    Transaction.new.first_time
+  def account_first
+    Transaction.new(@accounts).first_time
+  end
+
+  def sign_in
+    info = { 'name' => name_input,
+                'pin'  => pin_input }
+    account_info = Account.new(info)
+    account_info.account_view if account_info.match_pin?
   end
 
   def name_input

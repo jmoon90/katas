@@ -2,11 +2,11 @@ require 'pry'
 #Checks user PIN to account pin and decides
 #the correct user or tells them they need to create an account
 class Account
-  attr_reader :initial_deposit, :balance, :current_deposit, :name, :pin, :pin_confirm
+  attr_reader :name, :pin, :pin_confirm
   def initialize(argument)
-    @name = argument[:name]
-    @pin = argument[:pin]
-    @pin_confirmation = argument[:pin_confirm]
+    @name = argument['name']
+    @pin = argument['pin']
+    @pin_confirm = argument['pin_confirm']
   end
 
   def account_view
@@ -14,7 +14,17 @@ class Account
   end
 
   def unique_pin?
-    @pin == @pin_confirmation
+    @pin == @pin_confirm
+  end
+
+  def match_pin?
+    binding.pry
+    people_file = File.open('account.yml', 'r')
+    loaded_people = YAML.load(people_file)
+    loaded_people[0] == @name && loaded_people[1] == @pin
+  end
+
+  def initial_deposit
   end
 
   def account_action
@@ -42,7 +52,6 @@ class Account
   end
 
   def transaction_class
-    Transaction.new
   end
 
   def balance
