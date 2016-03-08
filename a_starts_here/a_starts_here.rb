@@ -2,38 +2,54 @@ require 'byebug'
 require 'benchmark'
 
 class HardWordDictionary
-  def initialize(words)
+  def initialize(words: words, index: 0)
     @words = words
+    @index = index
+    @half_way_index = 0
   end
 
-  def index_of_the_rotataion_point
+  def find_index_of_the_rotataion_point
     if @words.length == 2
-      return puts @words.sort.first
+      if @words[0][0] > @words[0][1]
+        @index += @half_way_index
+      end
+      return puts @index
     elsif @words.first[0] < half_way_word[0]
-      # we can subtract 1 to 0 and add 1 from halfway as these aren't A
-      @words = @words[halfway..-1]
-    elsif @words.first[0] > half_way_word[0]
-      @words = @words[0..halfway]
+      @index += @half_way_index
+      @words = @words[@half_way_index..-1]
+    else #@words.first[0] > half_way_word[0]
+      @words = @words[0..@half_way_index]
     end
-    HardWordDictionary.new(@words).index_of_the_rotataion_point
+
+    repeat_process_to_find_index_of_the_rotation_point
   end
 
-  def halfway
-    (@words.length) / 2
+  def repeat_process_to_find_index_of_the_rotation_point
+    HardWordDictionary.new(words: @words, index: @index).find_index_of_the_rotataion_point
   end
 
   def half_way_word
-    @words[halfway]
+    @words[@half_way_index]
   end
 end
 
-WORDS = [ 'ptolemaic', 'retrograde', 'supplant', 'undulate', 'xenoepist', 'apple', 'asymptote', 'babka', 'banoffee', 'engender', 'karpatka', 'othellolagkage']
+def read_one_by_one
+  WORDS.each_with_index do |word, i|
+    if word[0] =='a'
+      return puts i
+    end
+  end
+end
 
-puts HardWordDictionary.new(WORDS).index_of_the_rotataion_point
-puts WORDS.sort.first
+WORDS = [ 'ptolemaic', 'retrograde', 'sorry', 'supplant', 'undulate', 'xenoepist', 'zealot', 'zebra', 'babka', 'banoffee', 'engender', 'karpatka', 'othellolagkage']
+
+
+HardWordDictionary.new(words: WORDS).find_index_of_the_rotataion_point
+read_one_by_one
+
 
 # Benchmark.bm(7) do |x|
-#   x.report('class') {HardWordDictionary.new(WORDS).index_of_the_rotataion_point}
-#   x.report('sort') {WORDS.sort.first}
+#   x.report('class') {HardWordDictionary.new(words: WORDS).find_index_of_the_rotataion_point}
+#   x.report('sort') {read_one_by_one}
 # end
 #
