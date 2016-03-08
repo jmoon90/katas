@@ -2,19 +2,20 @@ require 'byebug'
 require 'benchmark'
 
 class HardWordDictionary
-  def initialize(words: words, index: 0)
+  def initialize(words: words, index: 1)
     @words = words
     @index = index
-    @half_way_index = 0
+    @half_way_index = @words.length / 2
+    @first_word = @words[0][0]
   end
 
   def find_index_of_the_rotataion_point
-    if @words.length == 2
-      if @words[0][0] > @words[0][1]
+    if @words.length == 3
+      if @first_word > @words[2][0]
         @index += @half_way_index
       end
       return puts @index
-    elsif @words.first[0] < half_way_word[0]
+    elsif @first_word < half_way_word[0]
       @index += @half_way_index
       @words = @words[@half_way_index..-1]
     else #@words.first[0] > half_way_word[0]
@@ -35,7 +36,7 @@ end
 
 def read_one_by_one
   WORDS.each_with_index do |word, i|
-    if word[0] =='a'
+    if word[0] =='b'
       return puts i
     end
   end
